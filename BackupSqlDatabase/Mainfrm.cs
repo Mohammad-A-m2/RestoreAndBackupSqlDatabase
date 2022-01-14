@@ -47,5 +47,37 @@ namespace RestoreAndBackupSqlDatabase
 
             }
         }
+        private void btnRestore_Click(object sender, EventArgs e)
+        {
+
+            myOpenDialog.DefaultExt = "BAK";
+            myOpenDialog.FileName = "BackupFile";
+            myOpenDialog.Filter = @"SQL Backup files (*.BAK) |*.BAK|All files (*.*) |*.*";
+            myOpenDialog.FilterIndex = 1;
+            myOpenDialog.Title = "Backup SQL File";
+            if (myOpenDialog.ShowDialog() == DialogResult.OK)
+            {
+                string strFileName = myOpenDialog.FileName;
+                //     restoersqlcode(strFileName);
+                if (RestoreDB.RestoerDatabase("YourDatabaseName", strFileName))
+                {
+                    MessageBox.Show("بازگردانی پایگاه داده در مسیر مورد نظر با موفقیت انجام شد"
+                       , "پیام موفقیت", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                    //string boardseries = MotherboardSerial.MotherBoardserial();
+                    //bool check= updateMotherboardSerial(boardseries);
+                    //if(check)
+                    //MessageBox.Show("سریال با موفقیت ویرایش شد");
+                    //else
+                    //    MessageBox.Show("اپدیت سریال ناموفق");
+                }
+
+            }
+            else
+            {
+                MessageBox.Show("بازگردانی پایگاه داده با خطا مواجه شد"
+                   , "پیام خطا", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
     }
 }
